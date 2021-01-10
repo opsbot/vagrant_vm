@@ -1,0 +1,8 @@
+# ignore build-harness
+*build-harness*
+
+# ignore env vars
+.vars
+
+# ignore vagrant cache
+.vagrant

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+source /vagrant/provision/lib/sh
+
+# if XDG_CONFIG_HOME is set we will respect it.. otherwise will set it to $HOME/.config
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+export XDG_CONFIG_HOME
+[ -d "$XDG_CONFIG_HOME" ] || mkdir -p "$XDG_CONFIG_HOME" # ensure $XDG_CONFIG_HOME dir exists
+
+echo "==> Set Launchbar favorites"
+echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
+dconf write /org/gnome/shell/favorite-apps "['google-chrome.desktop', 'slack.desktop', 'signal-desktop.desktop', 'code.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'rhythmbox.desktop', 'virtualbox.desktop', 'yelp.desktop']"
+
+echo "==> Opt Out of System Information Reports"
+echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
+ubuntu-report -f send no
+
+
+echo "==> Install Homebrew"
+echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+echo "==> install dotfiles"
+echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
+curl -fsSL https://raw.githubusercontent.com/russelltsherman/dotfiles/main/bin/bootstrap | bash
+
+echo "==> Change user shell to zsh"
+echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
+sudo chsh --shell /usr/bin/zsh vagrant
+
+sudo reboot now
