@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
   # 	sudo add-apt-repository universe
   # 	sudo add-apt-repository restricted
   # 	sudo add-apt-repository multiverse
-  # 	sudo apt update
+  # 	sudo apt-get update
   # 	sudo apt-get install -y software-properties-common
   # 	sudo apt-get update -y
   # 	sudo apt-get install -y python-setuptools python-dev build-essential

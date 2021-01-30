@@ -1,5 +1,5 @@
 
-vagrant:
+vagrant: clean
 	vagrant up
 
 clean:

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source /vagrant/provision/lib/sh
-
 # echo "==> configuring apt repository lists"
 # echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
 
@@ -10,11 +8,11 @@ source /vagrant/provision/lib/sh
 # add-apt-repository restricted
 # add-apt-repository multiverse
 
-echo "==> Installing apt packages"
-echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
-apt-get update
-apt-get install -y \
-  zsh
+# echo "==> Installing apt packages"
+# echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
+# apt-get update
+# apt-get install -y
+#
 
 echo "==> Opt Out of the Package Popularity Contest"
 apt remove -y popularity-contest
