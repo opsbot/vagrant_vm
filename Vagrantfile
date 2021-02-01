@@ -49,27 +49,47 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", inline: $environment_variables, run: "always"
 
-  config.vm.provision "system", type: "shell", path: "provision/bin/system", upload_path: "/vagrant/provision/bin/system", privileged: true
-  config.vm.provision "user", type: "shell", path: "provision/bin/user", upload_path: "/vagrant/provision/bin/user", privileged: false
+  # aws credentials directory
+  config.vm.synced_folder "~/.aws", "/home/vagrant/.aws"
 
-  # config.vm.provision "file", source: "#{ENV['HOME']}//.ssh//#{ssh_key_name}", destination: "/tmp/#{ssh_key_name}", run: "always"
-  # config.vm.provision "file", source: "#{ENV['HOME']}//.ssh//#{ssh_key_name}.pub", destination: "/tmp/#{ssh_key_name}.pub", run: "always"
+  # github api token
+  config.vm.provision "file", \
+    source: "#{ENV['HOME']}//.config/.github_token", \
+    destination: "/home/vagrant/.config/.github_token", \
+    run: "always"
+
+  # wakatime api token
+  config.vm.provision "file", \
+    source: "#{ENV['HOME']}//.wakatime.cfg", \
+    destination: "/home/vagrant/.wakatime.cfg", \
+    run: "always"
+
+  config.vm.provision "system", type: "shell", \
+    path: "provision/bin/system", \
+    upload_path: "/vagrant/provision/bin/system", \
+    privileged: true
+
+  config.vm.provision "user", type: "shell", \
+    path: "provision/bin/user", \
+    upload_path: "/vagrant/provision/bin/user", \
+    privileged: false
+
 
   # config.vm.provision "shell", run: "always", inline: <<-SHELL
   #   set -o errexit -o pipefail -o nounset
   #   mv /tmp/#{ssh_key_name}* /home/vagrant/.ssh
   #   chmod 0400 /home/vagrant/.ssh/#{ssh_key_name}
-  #   apt-get update
+  #   sudo apt-get -qq update
   #   DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" dist-upgrade -y
   # 	sudo add-apt-repository main
   # 	sudo add-apt-repository universe
   # 	sudo add-apt-repository restricted
   # 	sudo add-apt-repository multiverse
-  # 	sudo apt-get update
-  # 	sudo apt-get install -y software-properties-common
-  # 	sudo apt-get update -y
-  # 	sudo apt-get install -y python-setuptools python-dev build-essential
-  # 	sudo apt-get install -y python-pip
+  # 	sudo sudo apt-get -qq update
+  # 	sudo sudo apt-get -qq install -y software-properties-common
+  # 	sudo sudo apt-get -qq update -y
+  # 	sudo sudo apt-get -qq install -y python-setuptools python-dev build-essential
+  # 	sudo sudo apt-get -qq install -y python-pip
   # 	sudo pip install ansible
   #   DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" dist-upgrade -y
   #   PYTHONUNBUFFERED=1 ANSIBLE_NOCOLOR=true /vagrant/provisioning/run.sh development_environment.yml
