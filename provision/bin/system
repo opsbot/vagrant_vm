@@ -10,9 +10,18 @@
 
 # echo "==> Installing apt packages"
 # echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
-# apt-get update
-# apt-get install -y
+# sudo apt-get -qq update
+# sudo apt-get -qq install -y
 #
 
 echo "==> Opt Out of the Package Popularity Contest"
-apt remove -y popularity-contest
+apt-get -qq purge -y popularity-contest
+
+echo "==> Opt Out of reporting hardware and other collected metrics like installer or upgrade information."
+apt-get -qq purge -y ubuntu-report
+
+echo "==> Opt Out of sending error reports to cannonical."
+apt-get -qq purge -y apport whoopsie
+
+echo "==> Upgrade"
+apt-get -qq update && apt-get -qq upgrade
