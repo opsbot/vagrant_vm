@@ -2,9 +2,9 @@
 # shellcheck disable=SC1090
 # shellcheck disable=SC2016
 
-echo "==> Opt Out of System Information Reports"
-echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
-ubuntu-report -f send no
+dconf write /org/gnome/desktop/screensaver/idle-activation-enabled false
+dconf write /org/gnome/desktop/screensaver/lock-enabled false
+dconf write /com/ubuntu/update-notifier/show-livepatch-status-icon false
 
 echo "==> install dotfiles"
 echo "==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>==>"
