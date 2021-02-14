@@ -52,6 +52,8 @@ Vagrant.configure("2") do |config|
   # aws credentials directory
   config.vm.synced_folder "~/.aws", "/home/vagrant/.aws"
 
+  config.vm.synced_folder "~/src", "/home/vagrant/src"
+
   # github api token
   config.vm.provision "file", \
     source: "#{ENV['HOME']}//.config/.github_token", \
